@@ -1,3 +1,3 @@
-# DeepDeg4
+# DeepDeg4 model files
 
-* Code for training and inference of mRNA molecule stability models
+* Trained model files
