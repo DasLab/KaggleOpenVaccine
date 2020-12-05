@@ -1,3 +1,3 @@
-# DeepDeg4
+# DeepDeg4 training and inference scripts
 
-* Code for training and inference of mRNA molecule stability models
+* Code for training and inference scripts
