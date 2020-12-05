@@ -1,3 +1,3 @@
-# DeepDeg4
+# DeepDeg4 Jupyter Notebooks
 
-* Code for training and inference of mRNA molecule stability models
+* Jupyter notebooks used for EDA, modeling experiments, and initial inference
