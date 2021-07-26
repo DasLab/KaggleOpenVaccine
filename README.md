@@ -6,6 +6,7 @@ This code is based on the winning solution for the Open Vaccine Kaggle Competiti
 
 https://www.kaggle.com/c/stanford-covid-vaccine/overview
 
-This code is also the supplementary material for the Kaggle Competition Solution Paper.
+This code is also the supplementary material for the Kaggle Competition Solution Paper. The individual Kaggle writeups for the top solutions that have been featured in that paper can be found in the following table:
+
 
 
