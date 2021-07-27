@@ -15,3 +15,5 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |                |                |       |                                                                 |
 |Kazuki ** 2     |Kazuki Onodera  |   2   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189709| 
 |                |Kazuki Fujikawa |       |                                                                 |
+|                |                |       |                                                                 |
+|Striderl        |Hanfei Mao      |   3   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189574|
