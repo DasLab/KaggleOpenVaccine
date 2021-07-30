@@ -22,6 +22,14 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |                                 |Michele Tinti    |       |                                                                 |
 |                                 |Bram Steenwinckel|       |                                                                 |
 |                                 |                 |       |                                                                 |
-| tito                            |Takuya Ito       |   5   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189691|
+|tito                             |Takuya Ito       |   5   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189691|
+|                                 |                 |       |                                                                 |
+|nyanp                            |Taiga Noumi      |   6   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189241|
+|                                 |                 |       |                                                                 |
+|One architecture                 |Shujun He        |   7   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189564|
+|                                 |                 |       |                                                                 |
+|ishikei                          |Keiichiro Ishi   |   8   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/190314|
+
+
 
 
