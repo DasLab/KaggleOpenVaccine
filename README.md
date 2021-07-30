@@ -20,4 +20,8 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |                                 |                 |       |                                                                 |
 |FromTheWheel & Dyed & StoneShop  |Gilles Vandewiele|   4   |https://www.kaggle.com/group16/covid-19-mrna-4th-place-solution  |
 |                                 |Michele Tinti    |       |                                                                 |
+|                                 |Bram Steenwinckel|       |                                                                 |
+|                                 |                 |       |                                                                 |
+| tito                            |Takuya Ito       |   5   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189691|
+
 
