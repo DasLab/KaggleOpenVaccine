@@ -35,6 +35,9 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |Social Distancing Please         |Fatih Öztürk     |   11  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189571|
 |                                 |Anthony Chiu     |       |                                                                 |
 |                                 |Emin Ozturk      |       |                                                                 |
+|                                 |                 |       |                                                                 |
+|The Machine                      |Karim Amer       |   13  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189585|
+|                                 |Mohamed Fares    |       |                                                                 |
 
 
 
