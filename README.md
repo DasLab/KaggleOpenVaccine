@@ -29,6 +29,13 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |One architecture                 |Shujun He        |   7   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189564|
 |                                 |                 |       |                                                                 |
 |ishikei                          |Keiichiro Ishi   |   8   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/190314|
+|                                 |                 |       |                                                                 |
+|Keep going to be GM              |Youhan Lee       |   9   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189845|
+|                                 |                 |       |                                                                 |
+|Social Distancing Please         |Fatih Öztürk     |   11  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189571|
+|                                 |Anthony Chiu     |       |                                                                 |
+|                                 |Emin Ozturk      |       |                                                                 |
+
 
 
 
