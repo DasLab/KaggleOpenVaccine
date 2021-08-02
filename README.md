@@ -5,6 +5,9 @@ Code for training and inference of mRNA molecule stability models.
 ## Organization of the Repository
 
 model_files: actual model files for the models used for inference
+data: data used for the modeling and inference
+notebooks: inference Python notebooks
+scripts: inference Python scripts
 
 # Individual Kaggle Solutions
 
