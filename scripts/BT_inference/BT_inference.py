@@ -1,6 +1,6 @@
 import sys, getopt
-sys.path.append('/home/tunguz/arnie')
-sys.path.append('/home/tunguz')
+sys.path.append('~/arnie')
+sys.path.append('~')
 
 import numpy as np
 import re
