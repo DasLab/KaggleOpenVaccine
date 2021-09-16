@@ -37,6 +37,25 @@ import os
 
 from tqdm import tqdm
 
+LOSS_WGTS = [0.3, 0.3, 0.3, 0.05, 0.05] #column weights, need to sum up to 1
+
+
+DIST_NEW = True
+DIST_NEW2 = True
+
+BBP = True
+BBP1 = True
+BBP2 = True
+BBP3 = True
+BBP4 = True
+
+BBP_TOTAL = BBP+BBP1+BBP2+BBP3+BBP4*4
+
+# This will tell us the columns we are predicting
+pred_cols = ['reactivity', 'deg_Mg_pH10', 'deg_Mg_50C', 'deg_pH10', 'deg_50C']
+
+
+
 def convert_structure_to_bps(secstruct):
 
     bps = []
@@ -121,6 +140,51 @@ def write_bprna_string(dbn_string):
                 else:
                     bprna_string[start_ind:end_ind] = 'M'*(end_ind - start_ind)
     return ''.join(bprna_string)
+
+def encode_input(sequence, bprna_string, window_size=1, pad=0):
+    '''Creat input/output for regression model for predicting structure probing data.
+    Inputs:
+    
+    dataframe (in EternaBench RDAT format)
+    window_size: size of window (in one direction). so window_size=1 is a total window size of 3
+    pad: number of nucleotides at start to not include
+    seq (bool): include sequence encoding
+    struct (bool): include bpRNA structure encoding
+    
+    Outputs:
+    Input array (n_samples x n_features): array of windowed input features
+    feature_names (list, length = kernel x window): feature names, i.e. `S_-12`
+    
+    '''    
+    inpts = []
+
+    feature_kernel=['A','U','G','C','H','E','I','M','B','S', 'X']
+
+    length = len(sequence)
+    arr = np.zeros([length,len(feature_kernel)])
+        
+    for index in range(length):
+        ctr=0
+        for char in ['A','U','G','C']:
+            if sequence[index]==char:
+                arr[index,ctr]+=1
+            ctr+=1
+
+        for char in ['H','E','I','M','B','S', 'X']:
+            if bprna_string[index]==char:
+                arr[index,ctr]+=1
+            ctr+=1
+
+        # add zero padding to the side
+
+    padded_arr = np.vstack([np.zeros([window_size,len(feature_kernel)]), arr, np.zeros([window_size,len(feature_kernel)])])
+
+    for index in range(length):
+        new_index = index+window_size-pad
+        tmp = padded_arr[new_index-window_size:new_index+window_size+1]
+        inpts.append(tmp.flatten())
+            
+    return np.array(inpts)
 
 
 def make_preds(Lines):
