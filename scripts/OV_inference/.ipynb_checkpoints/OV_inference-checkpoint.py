@@ -898,6 +898,32 @@ def nn_preds(df_0, bp_matrix, Diversity_type, wgts_dir):
     gc.collect()
 
     K.clear_session()
+    
+    
+def get_preds_df():
+    
+    lst_pred = os.listdir()
+    lst_pred = sorted([x for x in lst_pred if x.startswith('sub_')])
+
+    preds_df_agg = pd.read_csv(lst_pred[0], index_col=0)
+    for n in lst_pred[1:]:
+        pred_temp = pd.read_csv(n, index_col=0)
+        pred_temp[pred_temp<-0.5] = -0.5
+        pred_temp[pred_temp>6] = 6
+        preds_df_agg += pred_temp
+    preds_df_agg = preds_df_agg/len(lst_pred)
+    preds_df_agg = preds_df_agg.reset_index()
+    
+    return preds_df_agg
+
+def get_preds_string(preds_):
+    
+    
+    predictions = [str(pred) for pred in preds_]
+    
+    predictions = ", ".join(predictions)
+    
+    return predictions
 
 
 
@@ -917,7 +943,10 @@ def make_preds(Lines):
         nn_preds(df, bp_matrix, 'gru', '../../model_files/ov-v40131-wgts/')
         nn_preds(df, bp_matrix, 'forward', '../../model_files/ov-v40237-wgts/')
         nn_preds(df, bp_matrix, 'wave', '../../model_files/ov-v40334-wgts/')
-        predictions = bprna_string #get_predictions(encoding)
+        preds_df = get_preds_df()
+        predictions = preds_df['deg_pH10'].values
+        predictions = get_preds_string(predictions)
+        #predictions = bprna_string #get_predictions(encoding)
         
         all_preds.append(predictions)
         
