@@ -416,7 +416,7 @@ def adj_attn(x, adj, unit, n = 2, rate = 0.1):
     return x_a
 
 
-def get_base(config, dim=None):
+def get_base(config, X_node, As, dim=None):
     node = tf.keras.Input(shape = (dim, X_node.shape[2]), name = "node")
     adj = tf.keras.Input(shape = (dim, dim, As.shape[3]), name = "adj")
     
@@ -471,7 +471,7 @@ def get_ae_model(base, config, dim=None):
     return model
 
 
-def get_model(base, config, dim=None):
+def get_model(base, config, Diversity_type, X_node, As, dim=None):
     node = tf.keras.Input(shape = (dim, X_node.shape[2]), name = "node")
     adj = tf.keras.Input(shape = (dim, dim, As.shape[3]), name = "adj")
     
@@ -664,7 +664,7 @@ def preprocess_inputs1(df, token2int, cols=['sequence', 'structure', 'bpRNA_stri
     return pandas_list_to_array(
         df[cols].applymap(lambda seq: [token2int[x] for x in 's'+seq+'e'])
     )
-def preprocess_inputs(df, token2int):
+def preprocess_inputs(df, token2int, bp_matrix):
     dict_row_idx = {}
 
     train_inputs = preprocess_inputs1(df, token2int)
@@ -824,11 +824,11 @@ def padding_2D(Ss):
     new[:, 1:-1, 1:-1] = Ss
     return new
 
-def get_inputs(df_temp):
+def get_inputs(df_temp, bp_matrix):
     
 
     X_node = get_input(df_temp).astype(np.float32)
-    X_node_new = preprocess_inputs(df_temp, token2int).astype(np.float32)
+    X_node_new = preprocess_inputs(df_temp, token2int, bp_matrix).astype(np.float32)
     X_node = np.concatenate([X_node, X_node_new], axis=2)
     del X_node_new
 
@@ -845,6 +845,61 @@ def get_inputs(df_temp):
     return X_node, As
 
 
+def dict_maker(df_0, bp_matrix):
+    
+    dict_X = {}
+    dict_A = {}
+    for i in tqdm(df_0.id.values):
+        df_temp = df_0.loc[df_0.id == i]
+        dict_X[i], dict_A[i] = get_inputs(df_temp, bp_matrix)
+        
+        
+    return dict_X, dict_A
+
+
+def nn_preds(df_0, bp_matrix, Diversity_type, wgts_dir):
+
+    config = {}
+    Diversity_type = Diversity_type #'lstm'
+    wgts_dir = wgts_dir #'../../model_files/ov-v40032-wgts/'
+    dict_X, dict_A = dict_maker(df_0, bp_matrix)
+    X_node, As = dict_X[0], dict_A[0]
+    
+    base = get_base(config, X_node, As)
+    model = get_model(base, config, Diversity_type, X_node, As)
+    
+
+    
+    for m in range(5):
+        print(m)
+        model.load_weights(wgts_dir+'model_%s.h5'%m)
+        preds_ls = []
+        for uid in tqdm(df_0.id.values):
+            X_node, As = dict_X[uid], dict_A[uid]
+            out1 = model.predict([X_node, As])
+            out2 = model.predict([reverse_input(X_node), reverse_BBP_3D(As)])[:,::-1,:]
+            out = (out1+out2)/2
+        
+            single_pred = out[0]
+            single_df = pd.DataFrame(single_pred, columns=pred_cols)
+            single_df['id_seqpos'] = [f'{uid}_{x}' for x in range(single_df.shape[0])]
+            preds_ls.append(single_df)
+            del out1, out2, out, single_pred, single_df
+        
+        preds_df = pd.concat(preds_ls).set_index('id_seqpos')
+        preds_df.to_csv("sub_%s_%s.csv"%(Diversity_type, m))
+    
+        del preds_df, preds_ls
+        gc.collect()
+        gc.collect()
+
+
+    del base, model
+    gc.collect()
+
+    K.clear_session()
+
+
 
 def make_preds(Lines):
 
@@ -858,6 +913,10 @@ def make_preds(Lines):
         df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
         df.sort_values(by='seq_length')
         print(df)
+        nn_preds(df, bp_matrix, 'lstm', '../../model_files/ov-v40032-wgts/')
+        nn_preds(df, bp_matrix, 'gru', '../../model_files/ov-v40131-wgts/')
+        nn_preds(df, bp_matrix, 'forward', '../../model_files/ov-v40237-wgts/')
+        nn_preds(df, bp_matrix, 'wave', '../../model_files/ov-v40334-wgts/')
         predictions = bprna_string #get_predictions(encoding)
         
         all_preds.append(predictions)
