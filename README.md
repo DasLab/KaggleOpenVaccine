@@ -11,7 +11,11 @@ data: data used for the modeling and inference
 notebooks: inference Python notebooks
 scripts: inference Python scripts
 
-# Individual Kaggle Solutions
+## Dependencies
+
+In order to run the Neural Network solution(s), you will need to install Arnie - Python API to compute RNA energetics and do structure prediction across multiple secondary structure packages. https://github.com/DasLab/arnie
+
+## Individual Kaggle Solutions
 
 This code is based on the winning solution for the Open Vaccine Kaggle Competition Challenge. The competition can be found here:
 
