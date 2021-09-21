@@ -1,6 +1,8 @@
 # DeepDeg4
 
-Code for training and inference of mRNA molecule stability models.
+Code for training and inference of mRNA molecule stability models. DeepDeg4 contains non-linear machine learning models - one based on XGBoost and a more advnced neural netwoek one based on the winning solution of the Kaggle Open Vaccine challenge. 
+
+DeepDeg4 models are advanced versions of the original DegScore model that can be found here: https://github.com/eternagame/DegScore
 
 ## Organization of the Repository
 
