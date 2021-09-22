@@ -959,7 +959,7 @@ def main(argv):
     output_feature = 'deg_pH10'
     
     try:
-        opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+        opts, args = getopt.getopt(argv,"hi:o:d:",["ifile=","ofile=", "deg="])
     except getopt.GetoptError:
         print('python OV_inference.py -i <inputfile> -o <outputfile>')
         sys.exit(2)
@@ -967,6 +967,8 @@ def main(argv):
         if opt == '-h':
             print('Usage: python BT_inference.py -i <inputfile> -o <outputfile>')
             sys.exit()
+        elif opt in ("-d", "--deg"):
+            output_feature = arg
         elif opt in ("-i", "--ifile"):
             inputfile = arg
             
@@ -984,8 +986,11 @@ def main(argv):
             with open(outputfile, 'w') as f:
                 for item in all_preds:
                     f.write("%s\n" % item)
+                    
+        
     print('Input file is', inputfile)
     print('Output file is', outputfile)
+    print('Output feature is', output_feature)
     
     
 
