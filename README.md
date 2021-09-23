@@ -13,7 +13,37 @@ scripts: inference Python scripts
 
 ## Dependencies
 
-In order to run the Neural Network solution(s), you will need to install Arnie - Python API to compute RNA energetics and do structure prediction across multiple secondary structure packages. https://github.com/DasLab/arnie
+Install via `pip install requirements.txt` or `conda install --file requirements.txt`
+
+*Not pip-installable:* You will need to install Arnie: a Python API to compute RNA energetics and do structure prediction across multiple secondary structure packages. https://github.com/DasLab/arnie
+
+
+## Setup
+
+1. [Install git-lfs](https://git-lfs.github.com/) (best to do before git-cloning this KaggleOpenVaccine repo).
+
+2. Install EternaFold, available for free noncommercial use [here](https://www.eternagame.org/about/software).
+
+3. Git clone [Arnie](https://github.com/DasLab/arnie), follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
+
+4. Add path to this repository as `KOV_PATH` (so that script can find path to stored model files):
+
+```
+export KOV_PATH='/path/to/KaggleOpenVaccine'
+```
+
+
+## Usage
+
+To run the nullrecurrent winning solution:
+
+```
+python scripts/OV_inference/OV_inference_2.py example_inputs/test0.txt
+```
+
+Will write a text file of output predictions to `predict.txt`:
+
+
 
 ## Individual Kaggle Solutions
 
