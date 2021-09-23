@@ -1,6 +1,4 @@
-import sys, getopt
-sys.path.append('~/arnie')
-sys.path.append('~')
+import sys, getopt, os
 
 import numpy as np
 import re
@@ -51,7 +49,10 @@ def secstruct_to_partner(secstruct):
     return partner_vec
 
 def write_bprna_string(dbn_string):
-    '''Input: dot-parenthesis string
+    '''
+    H Wayment Steele 2021.
+
+    Input: dot-parenthesis string
     Output: bpRNA-style loop type assignments'''
     
     pair_partners = secstruct_to_partner(dbn_string)
@@ -102,6 +103,8 @@ def write_bprna_string(dbn_string):
 
 def encode_input(sequence, bprna_string, window_size=1, pad=0):
     '''Creat input/output for regression model for predicting structure probing data.
+    H Wayment-Steele 2020.
+
     Inputs:
     
     dataframe (in EternaBench RDAT format)
@@ -158,7 +161,7 @@ def feature_generation(sequence):
 def get_predictions(encoding):
     
     reg = XGBRegressor(n_estimators=8200, tree_method='hist', learning_rate=0.005, max_depth=7, subsample=0.8, colsample_bytree=0.9, reg_alpha=0.005)
-    reg.load_model('../../model_files/bt_xgb/bt_xgb.model')
+    reg.load_model(os.environ['KOV_PATH']+'/model_files/bt_xgb/bt_xgb.model')
     
     predictions = reg.predict(encoding)
     
@@ -179,7 +182,6 @@ def make_preds(Lines):
         all_preds.append(predictions)
         
     return all_preds
-        
         
 def main(argv):
     inputfile = 'input.txt'
@@ -212,10 +214,6 @@ def main(argv):
                     f.write("%s\n" % item)
     print('Input file is', inputfile)
     print('Output file is', outputfile)
-    
-    
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-    
-    
