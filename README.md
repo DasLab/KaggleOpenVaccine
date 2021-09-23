@@ -10,13 +10,13 @@ Models contained here are:
 
 ## Organization of the Repository
 
-model_files: Store .h5 model files used at inference time.
-
-data: Data corresponding to Kaggle challenge and to subsequent tests on mRNAs.
+scripts: Python scripts to perform inference.
 
 notebooks: Python notebooks to perform inference.
 
-scripts: Scripts to perform inference.
+model_files: Store .h5 model files used at inference time.
+
+data: Data corresponding to Kaggle challenge and to subsequent tests on mRNAs.
 
 ## Dependencies
 
@@ -49,15 +49,30 @@ CGC
 Run
 
 ```
-python scripts/OV_inference/OV_inference_2.py -i example.txt -o predict.txt
+python scripts/nullrecurrent_inference.py -i example.txt -o predict.txt
+```
+
+or for the BT model:
+
+```
+python scripts/BT_inference.py -i example.txt -o predict.txt
 ```
 
 This write a text file of output predictions to `predict.txt`:
 
+(nullrecurrent output)
 ```
 2.1289976365, 2.650808962, 2.1869660805000004
 ```
 
+(BT output)
+```
+0.2697107, 0.37091506, 0.48528114
+```
+
+### A note on Energy model versions
+
+The predictions in the Kaggle competition and for the manuscript were performed with EternaFold parameters and CONTRAfold-SE code. The currently available EternaFold code will result in slightly different values. For more on the difference, see the EternaFold README.
 
 ## Individual Kaggle Solutions
 
@@ -68,7 +83,7 @@ https://www.kaggle.com/c/stanford-covid-vaccine/overview
 This code is also the supplementary material for the Kaggle Competition Solution Paper. The individual Kaggle writeups for the top solutions that have been featured in that paper can be found in the following table:
 
 
-| Team Name                       |  Team Memebers  | Rank  | Link to the solution                                            |
+| Team Name                       |  Team Members  | Rank  | Link to the solution                                            |
 |---------------------------------|-----------------|-------|-----------------------------------------------------------------|
 |Jiayang Gao                      | Jiayang Gao     |   1   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189620|
 |                                 |                 |       |                                                                 |
