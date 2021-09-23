@@ -38,7 +38,7 @@ Install via `pip install requirements.txt` or `conda install --file requirements
 export KOV_PATH='/path/to/KaggleOpenVaccine'
 ```
 
-## Usage for one construct at a time
+## Usage
 
 To run the nullrecurrent winning solution on one construct, given in `example.txt`:
 
@@ -70,7 +70,7 @@ This write a text file of output predictions to `predict.txt`:
 0.2697107, 0.37091506, 0.48528114
 ```
 
-### A note on Energy model versions
+### A note on energy model versions
 
 The predictions in the Kaggle competition and for the manuscript were performed with EternaFold parameters and CONTRAfold-SE code. The currently available EternaFold code will result in slightly different values. For more on the difference, see the EternaFold README.
 
