@@ -910,6 +910,9 @@ def get_preds_df():
         preds_df_agg += pred_temp
     preds_df_agg = preds_df_agg/len(lst_pred)
     preds_df_agg = preds_df_agg.reset_index()
+
+    for fil in lst_pred:
+        os.remove(fil)
     
     return preds_df_agg
 
@@ -931,8 +934,11 @@ def make_preds(Lines, output_feature):
     for sequence in Lines:
         #encoding = feature_generation(sequence)
         mfe_structure = mfe(sequence, package='eternafold')
+        #mfe_structure=mfe(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
+
         bprna_string = write_bprna_string(mfe_structure)
         bp_matrix = bpps(sequence, package='eternafold')
+        #bp_matrix=bpps(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
         df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
         df.sort_values(by='seq_length')
         print(df)
@@ -944,11 +950,10 @@ def make_preds(Lines, output_feature):
         predictions = preds_df[output_feature].values
         predictions = get_preds_string(predictions)
         #predictions = bprna_string #get_predictions(encoding)
-        
+
         all_preds.append(predictions)
         
     return all_preds
-        
         
 def main(argv):
     inputfile = 'input.txt'
@@ -977,6 +982,7 @@ def main(argv):
             print(Lines)
             
             all_preds = make_preds(Lines, output_feature)
+
         elif opt in ("-o", "--ofile"):
             outputfile = arg
             
@@ -988,8 +994,6 @@ def main(argv):
     print('Input file is', inputfile)
     print('Output file is', outputfile)
     print('Output feature is', output_feature)
-    
-    
 
 if __name__ == "__main__":
     main(sys.argv[1:])
