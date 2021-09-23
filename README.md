@@ -22,17 +22,19 @@ data: Data corresponding to Kaggle challenge and to subsequent tests on mRNAs.
 
 Install via `pip install requirements.txt` or `conda install --file requirements.txt`.
 
-*Not pip-installable:* See below.
+*Not pip-installable:* EternaFold, Vienna, and Arnie, see below.
 
 ## Setup
 
 1. [Install git-lfs](https://git-lfs.github.com/) (best to do before git-cloning this KaggleOpenVaccine repo).
 
-2. Install EternaFold, available for free noncommercial use [here](https://www.eternagame.org/about/software).
+2. Install EternaFold (the nullrecurrent model uses this), available for free noncommercial use [here](https://www.eternagame.org/about/software).
 
-3. Git clone [Arnie](https://github.com/DasLab/arnie), which wraps EternaFold in python and allows RNA thermodynamic calculations across many packages. Follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
+3. Install ViennaRNA (the BT model uses this), available [here](https://www.tbi.univie.ac.at/RNA/).
 
-4. Add path to this repository as `KOV_PATH` (so that script can find path to stored model files):
+4. Git clone [Arnie](https://github.com/DasLab/arnie), which wraps EternaFold in python and allows RNA thermodynamic calculations across many packages. Follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
+
+5. Add path to this repository as `KOV_PATH` (so that script can find path to stored model files):
 
 ```
 export KOV_PATH='/path/to/KaggleOpenVaccine'
