@@ -1,11 +1,5 @@
 import sys, getopt
 
-arnie_path = '/home/tunguz/arnie'
-home_path = '/home/tunguz/'
-
-sys.path.append(arnie_path)
-sys.path.append(home_path)
-
 import numpy as np
 import re
 from arnie.pfunc import pfunc
@@ -97,7 +91,9 @@ def secstruct_to_partner(secstruct):
 
 def write_bprna_string(dbn_string):
     '''Input: dot-parenthesis string
-    Output: bpRNA-style loop type assignments'''
+    Output: bpRNA-style loop type assignments
+    Author: H Wayment-Steele, 2021
+    '''
     
     pair_partners = secstruct_to_partner(dbn_string)
     
@@ -147,6 +143,7 @@ def write_bprna_string(dbn_string):
 
 def encode_input(sequence, bprna_string, window_size=1, pad=0):
     '''Creat input/output for regression model for predicting structure probing data.
+    H Wayment-Steele, 2020
     Inputs:
     
     dataframe (in EternaBench RDAT format)
@@ -939,10 +936,10 @@ def make_preds(Lines, output_feature):
         df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
         df.sort_values(by='seq_length')
         print(df)
-        nn_preds(df, bp_matrix, 'lstm', '../../model_files/ov-v40032-wgts/')
-        nn_preds(df, bp_matrix, 'gru', '../../model_files/ov-v40131-wgts/')
-        nn_preds(df, bp_matrix, 'forward', '../../model_files/ov-v40237-wgts/')
-        nn_preds(df, bp_matrix, 'wave', '../../model_files/ov-v40334-wgts/')
+        nn_preds(df, bp_matrix, 'lstm', os.environ['KOV_PATH']+'/model_files/ov-v40032-wgts/')
+        nn_preds(df, bp_matrix, 'gru', os.environ['KOV_PATH']+'/model_files/ov-v40131-wgts/')
+        nn_preds(df, bp_matrix, 'forward', os.environ['KOV_PATH']+'/model_files/ov-v40237-wgts/')
+        nn_preds(df, bp_matrix, 'wave', os.environ['KOV_PATH']+'/model_files/ov-v40334-wgts/')
         preds_df = get_preds_df()
         predictions = preds_df[output_feature].values
         predictions = get_preds_string(predictions)
@@ -965,7 +962,7 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('Usage: python BT_inference.py -i <inputfile> -o <outputfile>')
+            print('Usage: python OV_inference.py -i <inputfile> -o <outputfile>')
             sys.exit()
         elif opt in ("-d", "--deg"):
             output_feature = arg
