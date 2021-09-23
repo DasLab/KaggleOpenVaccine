@@ -1,10 +1,10 @@
-# DeepDeg4
+# Kaggle OpenVaccine Models
 
-Codebase of deep learning models for inferring stability of mRNA molecules.
+Codebase of deep learning models for inferring stability of mRNA molecules, corresponding to the [Kaggle Open Vaccine Challenge](https://www.kaggle.com/c/stanford-covid-vaccine) and accompanying manuscript "Predictive models of RNA degradation through dual crowdsourcing", Wayment-Steele et al (2021) (full citation when available).
 
 Models contained here are:
 
-"Nullrecurrent": winning solution from the [Kaggle Open Vaccine Challenge](https://www.kaggle.com/c/stanford-covid-vaccine).
+"Nullrecurrent": winning solution by Jiayang Gao
 
 "BT": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
 
