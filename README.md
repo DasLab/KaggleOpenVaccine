@@ -8,7 +8,7 @@ Models contained here are:
 
 "BT": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
 
-## Organization of the Repository
+## Organization
 
 scripts: Python scripts to perform inference.
 
