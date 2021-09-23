@@ -1,3 +1,3 @@
-# DeepDeg4 Data
+# Kaggle OpenVaccine Data
 
 * Data used for training the models
