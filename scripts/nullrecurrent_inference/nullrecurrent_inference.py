@@ -1,11 +1,5 @@
 import sys, getopt
 
-arnie_path = '/home/tunguz/arnie'
-home_path = '/home/tunguz/'
-
-sys.path.append(arnie_path)
-sys.path.append(home_path)
-
 import numpy as np
 import re
 from arnie.pfunc import pfunc
@@ -97,7 +91,9 @@ def secstruct_to_partner(secstruct):
 
 def write_bprna_string(dbn_string):
     '''Input: dot-parenthesis string
-    Output: bpRNA-style loop type assignments'''
+    Output: bpRNA-style loop type assignments
+    Author: H Wayment-Steele, 2021
+    '''
     
     pair_partners = secstruct_to_partner(dbn_string)
     
@@ -147,6 +143,7 @@ def write_bprna_string(dbn_string):
 
 def encode_input(sequence, bprna_string, window_size=1, pad=0):
     '''Creat input/output for regression model for predicting structure probing data.
+    H Wayment-Steele, 2020
     Inputs:
     
     dataframe (in EternaBench RDAT format)
@@ -913,6 +910,9 @@ def get_preds_df():
         preds_df_agg += pred_temp
     preds_df_agg = preds_df_agg/len(lst_pred)
     preds_df_agg = preds_df_agg.reset_index()
+
+    for fil in lst_pred:
+        os.remove(fil)
     
     return preds_df_agg
 
@@ -934,38 +934,43 @@ def make_preds(Lines, output_feature):
     for sequence in Lines:
         #encoding = feature_generation(sequence)
         mfe_structure = mfe(sequence, package='eternafold')
+        #mfe_structure=mfe(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
+
         bprna_string = write_bprna_string(mfe_structure)
         bp_matrix = bpps(sequence, package='eternafold')
+        #bp_matrix=bpps(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
         df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
         df.sort_values(by='seq_length')
         print(df)
-        nn_preds(df, bp_matrix, 'lstm', '../../model_files/ov-v40032-wgts/')
-        nn_preds(df, bp_matrix, 'gru', '../../model_files/ov-v40131-wgts/')
-        nn_preds(df, bp_matrix, 'forward', '../../model_files/ov-v40237-wgts/')
-        nn_preds(df, bp_matrix, 'wave', '../../model_files/ov-v40334-wgts/')
+        nn_preds(df, bp_matrix, 'lstm', os.environ['KOV_PATH']+'/model_files/ov-v40032-wgts/')
+        nn_preds(df, bp_matrix, 'gru', os.environ['KOV_PATH']+'/model_files/ov-v40131-wgts/')
+        nn_preds(df, bp_matrix, 'forward', os.environ['KOV_PATH']+'/model_files/ov-v40237-wgts/')
+        nn_preds(df, bp_matrix, 'wave', os.environ['KOV_PATH']+'/model_files/ov-v40334-wgts/')
         preds_df = get_preds_df()
         predictions = preds_df[output_feature].values
         predictions = get_preds_string(predictions)
         #predictions = bprna_string #get_predictions(encoding)
-        
+
         all_preds.append(predictions)
         
     return all_preds
-        
         
 def main(argv):
     inputfile = 'input.txt'
     outputfile = 'preds.txt'
     output_feature = 'deg_pH10'
-    
+   
+    if len(sys.argv)==1:
+        print('python nullrecurrent_inference.py -i <inputfile> -o <outputfile>')
+        sys.exit(2)
     try:
         opts, args = getopt.getopt(argv,"hi:o:d:",["ifile=","ofile=", "deg="])
     except getopt.GetoptError:
-        print('python OV_inference.py -i <inputfile> -o <outputfile>')
+        print('python nullrecurrent_inference.py -i <inputfile> -o <outputfile> --deg <deg_type, default Mg pH 10>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('Usage: python BT_inference.py -i <inputfile> -o <outputfile>')
+            print('Usage: python nullrecurrent_inference.py -i <inputfile> -o <outputfile> --deg <deg_type, default Mg pH 10>')
             sys.exit()
         elif opt in ("-d", "--deg"):
             output_feature = arg
@@ -980,6 +985,7 @@ def main(argv):
             print(Lines)
             
             all_preds = make_preds(Lines, output_feature)
+
         elif opt in ("-o", "--ofile"):
             outputfile = arg
             
@@ -991,8 +997,6 @@ def main(argv):
     print('Input file is', inputfile)
     print('Output file is', outputfile)
     print('Output feature is', output_feature)
-    
-    
 
 if __name__ == "__main__":
     main(sys.argv[1:])
