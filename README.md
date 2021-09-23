@@ -1,19 +1,80 @@
-# DeepDeg4
+# Kaggle OpenVaccine Models
 
-Code for training and inference of mRNA molecule stability models. DeepDeg4 contains non-linear machine learning models - one based on XGBoost and a more advnced neural netwoek one based on the winning solution of the Kaggle Open Vaccine challenge. 
+Codebase of deep learning models for inferring stability of mRNA molecules, corresponding to the [Kaggle Open Vaccine Challenge](https://www.kaggle.com/c/stanford-covid-vaccine) and accompanying manuscript "Predictive models of RNA degradation through dual crowdsourcing", Wayment-Steele et al (2021) (full citation when available).
 
-DeepDeg4 models are advanced versions of the original DegScore model that can be found here: https://github.com/eternagame/DegScore
+Models contained here are:
 
-## Organization of the Repository
+"Nullrecurrent": winning solution by Jiayang Gao
 
-model_files: actual model files for the models used for inference
-data: data used for the modeling and inference
-notebooks: inference Python notebooks
-scripts: inference Python scripts
+"BT": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
+
+## Organization
+
+scripts: Python scripts to perform inference.
+
+notebooks: Python notebooks to perform inference.
+
+model_files: Store .h5 model files used at inference time.
+
+data: Data corresponding to Kaggle challenge and to subsequent tests on mRNAs.
 
 ## Dependencies
 
-In order to run the Neural Network solution(s), you will need to install Arnie - Python API to compute RNA energetics and do structure prediction across multiple secondary structure packages. https://github.com/DasLab/arnie
+Install via `pip install requirements.txt` or `conda install --file requirements.txt`.
+
+*Not pip-installable:* EternaFold, Vienna, and Arnie, see below.
+
+## Setup
+
+1. [Install git-lfs](https://git-lfs.github.com/) (best to do before git-cloning this KaggleOpenVaccine repo).
+
+2. Install EternaFold (the nullrecurrent model uses this), available for free noncommercial use [here](https://www.eternagame.org/about/software).
+
+3. Install ViennaRNA (the BT model uses this), available [here](https://www.tbi.univie.ac.at/RNA/).
+
+4. Git clone [Arnie](https://github.com/DasLab/arnie), which wraps EternaFold in python and allows RNA thermodynamic calculations across many packages. Follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
+
+5. Add path to this repository as `KOV_PATH` (so that script can find path to stored model files):
+
+```
+export KOV_PATH='/path/to/KaggleOpenVaccine'
+```
+
+## Usage
+
+To run the nullrecurrent winning solution on one construct, given in `example.txt`:
+
+```
+CGC
+```
+
+Run
+
+```
+python scripts/nullrecurrent_inference.py -i example.txt -o predict.txt
+```
+
+or for the BT model:
+
+```
+python scripts/BT_inference.py -i example.txt -o predict.txt
+```
+
+This write a text file of output predictions to `predict.txt`:
+
+(nullrecurrent output)
+```
+2.1289976365, 2.650808962, 2.1869660805000004
+```
+
+(BT output)
+```
+0.2697107, 0.37091506, 0.48528114
+```
+
+### A note on energy model versions
+
+The predictions in the Kaggle competition and for the manuscript were performed with EternaFold parameters and CONTRAfold-SE code. The currently available EternaFold code will result in slightly different values. For more on the difference, see the EternaFold README.
 
 ## Individual Kaggle Solutions
 
@@ -24,7 +85,7 @@ https://www.kaggle.com/c/stanford-covid-vaccine/overview
 This code is also the supplementary material for the Kaggle Competition Solution Paper. The individual Kaggle writeups for the top solutions that have been featured in that paper can be found in the following table:
 
 
-| Team Name                       |  Team Memebers  | Rank  | Link to the solution                                            |
+| Team Name                       |  Team Members  | Rank  | Link to the solution                                            |
 |---------------------------------|-----------------|-------|-----------------------------------------------------------------|
 |Jiayang Gao                      | Jiayang Gao     |   1   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189620|
 |                                 |                 |       |                                                                 |

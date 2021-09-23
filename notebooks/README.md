@@ -1,4 +1,4 @@
-# DeepDeg4 Jupyter Notebooks
+# Kaggle OpenVaccine Jupyter Notebooks
 
 * Jupyter notebooks used for EDA, modeling experiments, and initial inference
 
