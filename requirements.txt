@@ -4,3 +4,4 @@ tensorflow
 sklearn
 pandas
 tqdm
+xgboost
