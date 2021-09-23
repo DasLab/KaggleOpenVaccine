@@ -32,17 +32,25 @@ Install via `pip install requirements.txt` or `conda install --file requirements
 export KOV_PATH='/path/to/KaggleOpenVaccine'
 ```
 
+## Usage for one construct at a time
 
-## Usage
-
-To run the nullrecurrent winning solution:
+To run the nullrecurrent winning solution on one construct, given in `example.txt`:
 
 ```
-python scripts/OV_inference/OV_inference_2.py example_inputs/test0.txt
+CGC
 ```
 
-Will write a text file of output predictions to `predict.txt`:
+Run
 
+```
+python scripts/OV_inference/OV_inference_2.py -i example.txt -o predict.txt
+```
+
+This write a text file of output predictions to `predict.txt`:
+
+```
+2.1289976365, 2.650808962, 2.1869660805000004
+```
 
 
 ## Individual Kaggle Solutions
