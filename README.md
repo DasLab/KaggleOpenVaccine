@@ -1,22 +1,28 @@
 # DeepDeg4
 
-Code for training and inference of mRNA molecule stability models. DeepDeg4 contains non-linear machine learning models - one based on XGBoost and a more advnced neural netwoek one based on the winning solution of the Kaggle Open Vaccine challenge. 
+Codebase of deep learning models for inferring stability of mRNA molecules.
 
-DeepDeg4 models are advanced versions of the original DegScore model that can be found here: https://github.com/eternagame/DegScore
+Models contained here are:
+
+"Nullrecurrent": winning solution from the [Kaggle Open Vaccine Challenge](https://www.kaggle.com/c/stanford-covid-vaccine).
+
+"BT": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
 
 ## Organization of the Repository
 
-model_files: actual model files for the models used for inference
-data: data used for the modeling and inference
-notebooks: inference Python notebooks
-scripts: inference Python scripts
+model_files: Store .h5 model files used at inference time.
+
+data: Data corresponding to Kaggle challenge and to subsequent tests on mRNAs.
+
+notebooks: Python notebooks to perform inference.
+
+scripts: Scripts to perform inference.
 
 ## Dependencies
 
-Install via `pip install requirements.txt` or `conda install --file requirements.txt`
+Install via `pip install requirements.txt` or `conda install --file requirements.txt`.
 
-*Not pip-installable:* You will need to install Arnie: a Python API to compute RNA energetics and do structure prediction across multiple secondary structure packages. https://github.com/DasLab/arnie
-
+*Not pip-installable:* See below.
 
 ## Setup
 
@@ -24,7 +30,7 @@ Install via `pip install requirements.txt` or `conda install --file requirements
 
 2. Install EternaFold, available for free noncommercial use [here](https://www.eternagame.org/about/software).
 
-3. Git clone [Arnie](https://github.com/DasLab/arnie), follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
+3. Git clone [Arnie](https://github.com/DasLab/arnie), which wraps EternaFold in python and allows RNA thermodynamic calculations across many packages. Follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
 
 4. Add path to this repository as `KOV_PATH` (so that script can find path to stored model files):
 
