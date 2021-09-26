@@ -4,9 +4,9 @@ Codebase of deep learning models for inferring stability of mRNA molecules, corr
 
 Models contained here are:
 
-"Nullrecurrent": winning solution by Jiayang Gao
+"Nullrecurrent": winning solution by Jiayang Gao. Link to original notebooks provided below.
 
-"BT": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
+"DegScore-XGBoost": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost. NB: This model was called the "BT" model in Eterna analysis.
 
 ## Organization
 
@@ -30,7 +30,7 @@ Install via `pip install requirements.txt` or `conda install --file requirements
 
 2. Install EternaFold (the nullrecurrent model uses this), available for free noncommercial use [here](https://www.eternagame.org/about/software).
 
-3. Install ViennaRNA (the BT model uses this), available [here](https://www.tbi.univie.ac.at/RNA/).
+3. Install ViennaRNA (the DegScore-XGBoost model uses this), available [here](https://www.tbi.univie.ac.at/RNA/).
 
 4. Git clone [Arnie](https://github.com/DasLab/arnie), which wraps EternaFold in python and allows RNA thermodynamic calculations across many packages. Follow instructions [here](https://github.com/DasLab/arnie/blob/master/docs/setup_doc.md) to link EternaFold to it.
 
@@ -54,20 +54,20 @@ Run
 python scripts/nullrecurrent_inference.py -i example.txt -o predict.txt
 ```
 
-or for the BT model:
+or for the DegScore-XGBoost model:
 
 ```
-python scripts/BT_inference.py -i example.txt -o predict.txt
+python scripts/degscore-xgboost_inference.py -i example.txt -o predict.txt
 ```
 
 This write a text file of output predictions to `predict.txt`:
 
-(nullrecurrent output)
+(Nullrecurrent output)
 ```
 2.1289976365, 2.650808962, 2.1869660805000004
 ```
 
-(BT output)
+(DegScore-XGBoost output)
 ```
 0.2697107, 0.37091506, 0.48528114
 ```
@@ -87,7 +87,7 @@ This code is also the supplementary material for the Kaggle Competition Solution
 
 | Team Name                       |  Team Members  | Rank  | Link to the solution                                            |
 |---------------------------------|-----------------|-------|-----------------------------------------------------------------|
-|Jiayang Gao                      | Jiayang Gao     |   1   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189620|
+|Nullrecurrent                    | Jiayang Gao     |   1   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189620|
 |                                 |                 |       |                                                                 |
 |Kazuki ** 2                      |Kazuki Onodera   |   2   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189709| 
 |                                 |Kazuki Fujikawa  |       |                                                                 |
