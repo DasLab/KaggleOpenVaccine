@@ -98,14 +98,11 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |---------------------------------|-----------------|-------|-----------------------------------------------------------------|
 |Nullrecurrent                    | Jiayang Gao     |   1   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189620|
 |                                 |                 |       |                                                                 |
-|Kazuki ** 2                      |Kazuki Onodera   |   2   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189709| 
-|                                 |Kazuki Fujikawa  |       |                                                                 |
+|Kazuki ** 2                      |Kazuki Onodera, Kazuki Fujikawa    |   2   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189709| 
 |                                 |                 |       |                                                                 |
 |Striderl                         |Hanfei Mao       |   3   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189574|
 |                                 |                 |       |                                                                 |
-|FromTheWheel & Dyed & StoneShop  |Gilles Vandewiele|   4   |https://www.kaggle.com/group16/covid-19-mrna-4th-place-solution  |
-|                                 |Michele Tinti    |       |                                                                 |
-|                                 |Bram Steenwinckel|       |                                                                 |
+|FromTheWheel & Dyed & StoneShop  |Gilles Vandewiele, Michele Tinti, Bram Steenwinckel|   4   |https://www.kaggle.com/group16/covid-19-mrna-4th-place-solution  |
 |                                 |                 |       |                                                                 |
 |tito                             |Takuya Ito       |   5   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189691|
 |                                 |                 |       |                                                                 |
@@ -117,12 +114,9 @@ This code is also the supplementary material for the Kaggle Competition Solution
 |                                 |                 |       |                                                                 |
 |Keep going to be GM              |Youhan Lee       |   9   |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189845|
 |                                 |                 |       |                                                                 |
-|Social Distancing Please         |Fatih Öztürk     |   11  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189571|
-|                                 |Anthony Chiu     |       |                                                                 |
-|                                 |Emin Ozturk      |       |                                                                 |
+|Social Distancing Please         |Fatih Öztürk,Anthony Chiu,Emin Ozturk |   11  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189571|
 |                                 |                 |       |                                                                 |
-|The Machine                      |Karim Amer       |   13  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189585|
-|                                 |Mohamed Fares    |       |                                                                 |
+|The Machine                      |Karim Amer,Mohamed Fares       |   13  |https://www.kaggle.com/c/stanford-covid-vaccine/discussion/189585|
 
 
 
