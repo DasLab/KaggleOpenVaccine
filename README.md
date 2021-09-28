@@ -4,7 +4,7 @@ Codebase of deep learning models for inferring stability of mRNA molecules, corr
 
 Models contained here are:
 
-"Nullrecurrent": winning solution by Jiayang Gao. Link to original notebooks provided below.
+"Nullrecurrent": A reconstruction of winning solution by Jiayang Gao. Link to original notebooks provided below.
 
 "DegScore-XGBoost": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
 
