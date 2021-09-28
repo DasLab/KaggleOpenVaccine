@@ -8,11 +8,12 @@ Models contained here are:
 
 "DegScore-XGBoost": A model based the [original DegScore model](https://github.com/eternagame/DegScore) and XGBoost.
 
-NB on other historic names for models:
 
-The Nullrecurrent model was called "OV" model in some instances and the .h5 model files for the Nullrecurrent model are labeled "ov".
+_NB on other historic names for models_
 
-The DegScore-XGBoost model was called the "BT" model in Eterna analysis.
+- The Nullrecurrent model was called "OV" model in some instances and the .h5 model files for the Nullrecurrent model are labeled "ov".
+
+- The DegScore-XGBoost model was called the "BT" model in Eterna analysis.
 
 
 
