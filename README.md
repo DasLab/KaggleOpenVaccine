@@ -66,6 +66,11 @@ python scripts/nullrecurrent_inference.py [-d deg] -i example.txt -o predict.txt
 where the ```deg``` is one of the following options
 
 ```
+deg_Mg_pH10
+deg_pH10
+deg_Mg_50C
+deg_50C
+
 ```
 
 
