@@ -60,10 +60,21 @@ CGC
 Run
 
 ```
-python scripts/nullrecurrent_inference.py -i example.txt -o predict.txt
+python scripts/nullrecurrent_inference.py [-d deg] -i example.txt -o predict.txt
 ```
 
-or for the DegScore-XGBoost model:
+where the ```deg``` is one of the following options
+
+```
+deg_Mg_pH10
+deg_pH10
+deg_Mg_50C
+deg_50C
+
+```
+
+
+Similarly, for the DegScore-XGBoost model :
 
 ```
 python scripts/degscore-xgboost_inference.py -i example.txt -o predict.txt
