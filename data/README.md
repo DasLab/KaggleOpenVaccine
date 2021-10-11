@@ -20,3 +20,4 @@ Because all the original formats are slightly different, the `reformat_*.py` scr
 
 `RegenerateFigure5.ipynb` reproduces the final scatterplot comparisons.
 
+`posthoc_code_predictions` contains predictions from the `Nullrecurrent` code model contained in this repository.
