@@ -47,7 +47,11 @@ Because all the original formats are slightly different, the `reformat_*.py` scr
 
 `RegenerateFigure5.ipynb` reproduces the final scatterplot comparisons.
 
-`posthoc_code_predictions` contains predictions from the `Nullrecurrent` code model contained in this repository.
+`posthoc_code_predictions` contains predictions from the `Nullrecurrent` code model contained in this repository. To generate these predictions use the sequence file in the mRNA_233x_data folder and run the following command(s):
+
+`python scripts/nullrecurrent_inference.py -d deg_Mg_pH10 -i 233_sequences.txt -o 233x_nullrecurrent_output_Oct2021_deg_Mg_50C.txt`,
+
+etc.
 
 
 ## Dependencies
