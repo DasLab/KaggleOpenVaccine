@@ -15,14 +15,17 @@ import csv
 
 import pandas as pd
 import numpy as np
-import plotly.express as px
 import tensorflow.keras.layers as L
 import tensorflow.keras.backend as K
 import tensorflow as tf
 from sklearn.model_selection import train_test_split,KFold, GroupKFold,StratifiedKFold
 
 from tensorflow.keras import losses
-    
+
+
+from pandarallel import pandarallel
+pandarallel.initialize(progress_bar=True)
+
 from sklearn.metrics import mean_squared_error
 
 import tensorflow.keras as keras
@@ -846,7 +849,7 @@ def dict_maker(df_0, bp_matrix):
     
     dict_X = {}
     dict_A = {}
-    for i in tqdm(df_0.id.values):
+    for i in df_0.id.values:
         df_temp = df_0.loc[df_0.id == i]
         dict_X[i], dict_A[i] = get_inputs(df_temp, bp_matrix)
         
@@ -865,13 +868,13 @@ def nn_preds(df_0, bp_matrix, Diversity_type, wgts_dir):
     base = get_base(config, X_node, As)
     model = get_model(base, config, Diversity_type, X_node, As)
     
-
+    all_pred_dfs=[]
     
     for m in range(5):
         print(m)
         model.load_weights(wgts_dir+'model_%s.h5'%m)
         preds_ls = []
-        for uid in tqdm(df_0.id.values):
+        for uid in df_0.id.values:
             X_node, As = dict_X[uid], dict_A[uid]
             out1 = model.predict([X_node, As])
             out2 = model.predict([reverse_input(X_node), reverse_BBP_3D(As)])[:,::-1,:]
@@ -884,8 +887,9 @@ def nn_preds(df_0, bp_matrix, Diversity_type, wgts_dir):
             del out1, out2, out, single_pred, single_df
         
         preds_df = pd.concat(preds_ls).set_index('id_seqpos')
-        preds_df.to_csv("sub_%s_%s.csv"%(Diversity_type, m))
-    
+        #preds_df.to_csv("sub_%s_%s.csv"%(Diversity_type, m))
+        all_pred_dfs.append(preds_df)
+
         del preds_df, preds_ls
         gc.collect()
         gc.collect()
@@ -895,26 +899,39 @@ def nn_preds(df_0, bp_matrix, Diversity_type, wgts_dir):
     gc.collect()
 
     K.clear_session()
-    
-    
-def get_preds_df():
-    
-    lst_pred = os.listdir()
-    lst_pred = sorted([x for x in lst_pred if x.startswith('sub_')])
 
-    preds_df_agg = pd.read_csv(lst_pred[0], index_col=0)
-    for n in lst_pred[1:]:
-        pred_temp = pd.read_csv(n, index_col=0)
-        pred_temp[pred_temp<-0.5] = -0.5
-        pred_temp[pred_temp>6] = 6
-        preds_df_agg += pred_temp
-    preds_df_agg = preds_df_agg/len(lst_pred)
-    preds_df_agg = preds_df_agg.reset_index()
-
-    for fil in lst_pred:
-        os.remove(fil)
+    return all_pred_dfs
     
-    return preds_df_agg
+    
+def get_preds_df(all_pred_dfs):
+
+    preds_df_agg2 = all_pred_dfs[0]
+    for df in all_pred_dfs[1:]:
+        df[df<-0.5] = -0.5
+        df[df>6] = 6
+        preds_df_agg2 += df
+    preds_df_agg2 = preds_df_agg2/len(all_pred_dfs)
+    preds_df_agg2 = preds_df_agg2.reset_index()
+    #return ','.join(map(str, preds_df_agg2['reactivity'].values))
+    return preds_df_agg2 #['reactivity'].values
+    ######
+    
+    # lst_pred = os.listdir()
+    # lst_pred = sorted([x for x in lst_pred if x.startswith('sub_')])
+
+    # preds_df_agg = pd.read_csv(lst_pred[0], index_col=0)
+    # for n in lst_pred[1:]:
+    #     pred_temp = pd.read_csv(n, index_col=0)
+    #     pred_temp[pred_temp<-0.5] = -0.5
+    #     pred_temp[pred_temp>6] = 6
+    #     preds_df_agg += pred_temp
+    # preds_df_agg = preds_df_agg/len(lst_pred)
+    # preds_df_agg = preds_df_agg.reset_index()
+
+    # for fil in lst_pred:
+    #     os.remove(fil)
+    
+    # return preds_df_agg
 
 def get_preds_string(preds_):
     
@@ -925,6 +942,33 @@ def get_preds_string(preds_):
     
     return predictions
 
+def _make_pred(sequence, output_feature):
+ #encoding = feature_generation(sequence)
+    mfe_structure = mfe(sequence, package='eternafold')
+    #mfe_structure=mfe(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
+
+    bprna_string = write_bprna_string(mfe_structure)
+    bp_matrix = bpps(sequence, package='eternafold')
+    #bp_matrix=bpps(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
+    df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
+    df.sort_values(by='seq_length')
+    print(df)
+
+    all_dfs = []
+
+    all_dfs.extend(nn_preds(df, bp_matrix, 'lstm', os.environ['KOV_PATH']+'/model_files/ov-v40032-wgts/'))
+    all_dfs.extend(nn_preds(df, bp_matrix, 'gru', os.environ['KOV_PATH']+'/model_files/ov-v40131-wgts/'))
+    all_dfs.extend(nn_preds(df, bp_matrix, 'forward', os.environ['KOV_PATH']+'/model_files/ov-v40237-wgts/'))
+    all_dfs.extend(nn_preds(df, bp_matrix, 'wave', os.environ['KOV_PATH']+'/model_files/ov-v40334-wgts/'))
+
+
+    preds_df = get_preds_df(all_dfs)
+    predictions = preds_df[output_feature].values
+    predictions = get_preds_string(predictions)
+
+    return predictions
+        #predictions = bprna_string #get_predictions(encoding)
+
 
 
 def make_preds(Lines, output_feature):
@@ -932,25 +976,8 @@ def make_preds(Lines, output_feature):
     all_preds = []
     
     for sequence in Lines:
-        #encoding = feature_generation(sequence)
-        mfe_structure = mfe(sequence, package='eternafold')
-        #mfe_structure=mfe(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
 
-        bprna_string = write_bprna_string(mfe_structure)
-        bp_matrix = bpps(sequence, package='eternafold')
-        #bp_matrix=bpps(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
-        df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
-        df.sort_values(by='seq_length')
-        print(df)
-        nn_preds(df, bp_matrix, 'lstm', os.environ['KOV_PATH']+'/model_files/ov-v40032-wgts/')
-        nn_preds(df, bp_matrix, 'gru', os.environ['KOV_PATH']+'/model_files/ov-v40131-wgts/')
-        nn_preds(df, bp_matrix, 'forward', os.environ['KOV_PATH']+'/model_files/ov-v40237-wgts/')
-        nn_preds(df, bp_matrix, 'wave', os.environ['KOV_PATH']+'/model_files/ov-v40334-wgts/')
-        preds_df = get_preds_df()
-        predictions = preds_df[output_feature].values
-        predictions = get_preds_string(predictions)
-        #predictions = bprna_string #get_predictions(encoding)
-
+        predictions = _make_pred(sequence)
         all_preds.append(predictions)
         
     return all_preds
@@ -983,8 +1010,9 @@ def main(argv):
                 Lines = [line.rstrip() for line in f]
             
             print(Lines)
-            
-            all_preds = make_preds(Lines, output_feature)
+            df = pd.DataFrame({'sequence': Lines})
+            #all_preds = make_preds(Lines, output_feature)
+            all_preds = df.parallel_apply(lambda row: _make_pred(row['sequence'], output_feature), axis=1)
 
         elif opt in ("-o", "--ofile"):
             outputfile = arg
