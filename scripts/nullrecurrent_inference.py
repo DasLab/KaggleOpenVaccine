@@ -37,6 +37,7 @@ import os
 
 
 from tqdm import tqdm
+tqdm.pandas()
 
 LOSS_WGTS = [0.3, 0.3, 0.3, 0.05, 0.05] #column weights, need to sum up to 1
 
@@ -871,7 +872,6 @@ def nn_preds(df_0, bp_matrix, Diversity_type, wgts_dir):
     all_pred_dfs=[]
     
     for m in range(5):
-        print(m)
         model.load_weights(wgts_dir+'model_%s.h5'%m)
         preds_ls = []
         for uid in df_0.id.values:
@@ -951,7 +951,7 @@ def _make_pred(sequence, output_feature):
     bp_matrix = bpps(sequence, package='eternafold')
     #bp_matrix=bpps(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
     df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
-    df.sort_values(by='seq_length')
+    #df.sort_values(by='seq_length')
     print(df)
 
     all_dfs = []
@@ -985,7 +985,7 @@ def make_preds(Lines, output_feature):
 def main(argv):
     inputfile = 'input.txt'
     outputfile = 'preds.txt'
-    output_feature = 'deg_pH10'
+    output_feature = 'deg_Mg_pH10'
    
     if len(sys.argv)==1:
         print('python nullrecurrent_inference.py -i <inputfile> -o <outputfile>')
@@ -1012,7 +1012,7 @@ def main(argv):
             print(Lines)
             df = pd.DataFrame({'sequence': Lines})
             #all_preds = make_preds(Lines, output_feature)
-            all_preds = df.parallel_apply(lambda row: _make_pred(row['sequence'], output_feature), axis=1)
+            all_preds = df.progress_apply(lambda row: _make_pred(row['sequence'], output_feature), axis=1)
 
         elif opt in ("-o", "--ofile"):
             outputfile = arg
