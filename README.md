@@ -76,6 +76,8 @@ Install via `pip install requirements.txt` or `conda install --file requirements
 export KOV_PATH='/path/to/KaggleOpenVaccine'
 ```
 
+(Est. setup time: 10 min.)
+
 ## Usage
 
 To run the nullrecurrent winning solution on one construct, given in `example.txt`:
