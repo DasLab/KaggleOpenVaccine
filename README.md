@@ -113,11 +113,13 @@ This write a text file of output predictions to `predict.txt`:
 ```
 2.1289976365, 2.650808962, 2.1869660805000004
 ```
+(Runtime: 1 minute on 1.4 GHz Intel Core i5 processor).
 
 (DegScore-XGBoost output)
 ```
 0.2697107, 0.37091506, 0.48528114
 ```
+(Runtime: 5 sec on 1.4 GHz Intel Core i5 processor).
 
 ### A note on energy model versions
 
