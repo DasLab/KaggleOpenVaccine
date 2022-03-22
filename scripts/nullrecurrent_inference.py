@@ -966,7 +966,7 @@ def _make_pred(sequence, output_feature,mfe_structure=None, bp_matrix=None):
 
     preds_df = get_preds_df(all_dfs)
     predictions = preds_df[output_feature].values
-    #predictions = get_preds_string(predictions)
+    predictions = get_preds_string(predictions)
 
     return predictions
         #predictions = bprna_string #get_predictions(encoding)
