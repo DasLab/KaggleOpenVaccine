@@ -942,13 +942,15 @@ def get_preds_string(preds_):
     
     return predictions
 
-def _make_pred(sequence, output_feature):
+def _make_pred(sequence, output_feature,mfe_structure=None, bp_matrix=None):
  #encoding = feature_generation(sequence)
-    mfe_structure = mfe(sequence, package='eternafold')
+    if mfe_structure is None:
+        mfe_structure = mfe(sequence, package='eternafold')
     #mfe_structure=mfe(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
 
     bprna_string = write_bprna_string(mfe_structure)
-    bp_matrix = bpps(sequence, package='eternafold')
+    if bp_matrix is None:
+        bp_matrix = bpps(sequence, package='eternafold')
     #bp_matrix=bpps(sequence, package='contrafold',param_file='/Users/hwayment/das/github/EternaFold/parameters/EternaFoldParams.v1')
     df = pd.DataFrame(data = [{'id': 0, 'sequence': sequence, 'bpRNA_string': bprna_string, 'structure': mfe_structure, 'seq_length': len(sequence)}])
     #df.sort_values(by='seq_length')
@@ -964,7 +966,7 @@ def _make_pred(sequence, output_feature):
 
     preds_df = get_preds_df(all_dfs)
     predictions = preds_df[output_feature].values
-    predictions = get_preds_string(predictions)
+    #predictions = get_preds_string(predictions)
 
     return predictions
         #predictions = bprna_string #get_predictions(encoding)
