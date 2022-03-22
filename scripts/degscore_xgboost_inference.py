@@ -193,7 +193,7 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('Usage: python BT_inference.py -i <inputfile> -o <outputfile>')
+            print('Usage: python degscore_xgboost_inference.py -i <inputfile> -o <outputfile>')
             sys.exit()
         elif opt in ("-i", "--ifile"):
             inputfile = arg
