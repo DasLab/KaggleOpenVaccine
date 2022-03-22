@@ -21,11 +21,6 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split,KFold, GroupKFold,StratifiedKFold
 
 from tensorflow.keras import losses
-
-
-from pandarallel import pandarallel
-pandarallel.initialize(progress_bar=True)
-
 from sklearn.metrics import mean_squared_error
 
 import tensorflow.keras as keras
