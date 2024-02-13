@@ -1,6 +1,6 @@
 # Kaggle OpenVaccine Models
 
-Codebase of deep learning models for inferring stability of mRNA molecules, corresponding to the [Kaggle Open Vaccine Challenge](https://www.kaggle.com/c/stanford-covid-vaccine) and accompanying manuscript "Predictive models of RNA degradation through dual crowdsourcing", Wayment-Steele et al (2021) (full citation when available).
+Codebase of deep learning models for inferring stability of mRNA molecules, corresponding to the [Kaggle Open Vaccine Challenge](https://www.kaggle.com/c/stanford-covid-vaccine) and accompanying manuscript "Deep learning models for predicting RNA degradation via dual crowdsourcing", Wayment-Steele et al (2022) (Nat Mach Intell, https://doi.org/10.1038/s42256-022-00571-8).
 
 Models contained here are:
 
